@@ -1,26 +1,7 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Copyright (c) 2013 ZestyBeanz Technologies Pvt. Ltd.
-#    (http://wwww.zbeanztech.com)
-#    contact@zbeanztech.com
-#    Copyright (c) 2015 Savoir-faire Linux
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-
+# -*- coding: utf-8 -*-
+# © 2013 ZestyBeanz Technologies Pvt. Ltd.
+# © 2016 Savoir-faire Linux
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import sys
 import copy
@@ -419,7 +400,6 @@ class _rml_canvas(object):
     def _textual(self, node, x=0, y=0):
         text = node.text and node.text.encode('utf-8') or ''
         rc = utils._process_text(self, text)
-        print node
         for n in node:
             if n.tag == 'seq':
                 from reportlab.lib.sequencer import getSequencer

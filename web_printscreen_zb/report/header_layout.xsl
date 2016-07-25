@@ -18,7 +18,7 @@
         <drawString x="1.3cm" y="1.5cm"><xsl:value-of select="//header-date"/></drawString>
 
         <place x="1.3cm" y="0cm" height="2.55cm" width="19.0cm">
-            <para style="main_footer"><pageNumber/></para>
+            <para><pageNumber/></para>
         </place>
 
     </xsl:template>
