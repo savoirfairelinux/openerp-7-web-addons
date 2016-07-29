@@ -40,6 +40,7 @@ def formats(self, req):
 
 
 Export.formats = formats
+Export._cp_path = '/web/export'
 
 
 class ZbExcelExport(ExcelExport):
