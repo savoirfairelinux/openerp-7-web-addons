@@ -14,7 +14,6 @@ import re
 from cStringIO import StringIO
 from lxml import etree
 import trml2pdf
-import operator
 import os
 import openerp.tools as tools
 try:
@@ -23,23 +22,6 @@ except ImportError:
     xlwt = None
 
 
-@openerpweb.jsonrequest
-def formats(self, req):
-    """
-    Override the original method of class Export to prevent
-    unwanted classes to appear in the types of exports in the
-    exporting wizard.
-    """
-    return sorted([
-        controller.fmt
-        for path, controller in openerpweb.controllers_path.iteritems()
-        if path.startswith(self._cp_path) and
-        hasattr(controller, 'fmt') and
-        controller.fmt is not None
-    ], key=operator.itemgetter("label"))
-
-
-Export.formats = formats
 Export._cp_path = '/web/export'
 
 
