@@ -9,16 +9,16 @@ import reportlab
 import re
 from reportlab.pdfgen import canvas
 from reportlab import platypus
-from openerp.report.render.rml2pdf import utils
-from openerp.report.render.rml2pdf import color
+from odoo.report.render.rml2pdf import utils
+from odoo.report.render.rml2pdf import color
 import os
 import logging
 from lxml import etree
 import base64
 from reportlab.platypus.doctemplate import ActionFlowable
-from openerp.tools.safe_eval import safe_eval as eval
+from odoo.tools.safe_eval import safe_eval as eval
 from reportlab.lib.units import cm
-from openerp.tools.misc import file_open
+from odoo.tools.misc import file_open
 from reportlab.pdfbase import pdfmetrics
 from reportlab.lib.utils import ImageReader
 
