@@ -16,7 +16,9 @@
     'data': [
         'views/web_printscreen_zb.xml',
     ],
-    'qweb': ['static/src/xml/web_printscreen_export.xml'],
+    'qweb': [
+        'static/src/xml/web_printscreen_export.xml',
+    ],
     'installable': True,
     'auto_install': False,
     'web_preload': False,

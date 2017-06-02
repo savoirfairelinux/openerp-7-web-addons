@@ -3,6 +3,8 @@
 # © 2016 Savoir-faire Linux
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from . import trml2pdf
-from . import controllers
-from . import models
+from . import (
+    trml2pdf,
+    controllers,
+    models,
+)

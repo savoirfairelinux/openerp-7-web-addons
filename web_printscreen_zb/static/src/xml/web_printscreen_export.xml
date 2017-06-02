@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <templates id="template" xml:space="preserve">
-  <t t-name="ListView.ExportLinks">
+<t t-name="ListView.ExportLinks">
     <div class="oe_web_printscreen oe_right">
-      <a class="oe_bold oe_list_button_import_pdf" id="button_export_pdf" href="#">PDF</a>
-      <label>or</label>
-      <a class="oe_bold oe_list_button_import_excel" id="button_export_excel" href="#">Excel</a>
+        <a class="oe_bold oe_list_button_import_pdf" id="button_export_pdf" href="#">PDF</a>
+        <label>or</label>
+        <a class="oe_bold oe_list_button_import_excel" id="button_export_excel" href="#">Excel</a>
     </div>
   </t>
 </templates>

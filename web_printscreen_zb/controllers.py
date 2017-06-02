@@ -7,15 +7,15 @@ try:
     import json
 except ImportError:
     import simplejson as json
-import openerp.addons.web.http as openerpweb
-from openerp.addons.web.controllers.main import ExcelExport
-from openerp.addons.web.controllers.main import Export
+import odoo.http as http
+from odoo.addons.web.controllers.main import ExcelExport
+from odoo.addons.web.controllers.main import Export
 import re
 from cStringIO import StringIO
 from lxml import etree
 import trml2pdf
 import os
-import openerp.tools as tools
+import odoo.tools as tools
 try:
     import xlwt
 except ImportError:
@@ -78,7 +78,7 @@ class ZbExcelExport(ExcelExport):
         fp.close()
         return data
 
-    @openerpweb.httprequest
+    @http.route('/web/export/zb_excel_export', type='http', auth='user')
     def index(self, req, data, token):
         data = json.loads(data)
         return req.make_response(
@@ -180,7 +180,7 @@ class ZbPdfExport(ExportPdf):
     fmt = None
     _cp_path = '/web/export/zb_pdf_export'
 
-    @openerpweb.httprequest
+    @http.route('/web/export/zb_pdf_export', type='http', auth='user')
     def index(self, req, data, token):
         data = json.loads(data)
         uid = data.get('uid', False)
