@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # © 2013 ZestyBeanz Technologies Pvt. Ltd.
-# © 2016 Savoir-faire Linux
+# © 2016-2017 Savoir-faire Linux
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 try:
@@ -39,6 +39,7 @@ class ZbExcelExport(ExcelExport):
         style.font = font
         ignore_index = []
         count = 0
+        currency = ['$', '¥', '£', '€']  # add currency if needed !
         for i, fieldname in enumerate(fields):
             if fieldname.get('header_data_id', False):
                 field_name = fieldname.get('header_name', '')
@@ -66,6 +67,14 @@ class ZbExcelExport(ExcelExport):
                         cellvalue = float(cellvalue)
                     if cellvalue is False:
                         cellvalue = None
+                    for sign in currency:
+                        if unicode(sign, "utf-8") in cellvalue:
+                            cellvalue = cellvalue.replace(
+                                unicode(sign, 'utf-8'), '')
+                            cellvalue = cellvalue.replace(
+                                ',', '').replace('.', '').replace(u'\xa0', '')
+                    if cellvalue.isdigit():
+                        cellvalue = int(cellvalue)
                     worksheet.write(
                         row_index + 1, cell_index - count, cellvalue,
                         cell_style)
