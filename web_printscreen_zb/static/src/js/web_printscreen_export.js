@@ -38,17 +38,25 @@ ListView.include({
         // Find Header Element
         var header_eles = self.$el.find('.o_list_view > thead > tr')
         var header_name_list = []
+        var selector_index = null;
         $.each(header_eles,function(){
             var $header_ele = $(this)
             var header_td_elements = $header_ele.find('th')
-            $.each(header_td_elements,function(){
+            var i = 0;
+            $.each(header_td_elements, function(){
                 var $header_td = $(this)
-                var text = $header_td.text().trim() || ""
-                var data_id = $header_td.attr('data-id')
-                if (text && !data_id){
-                    data_id = 'group_name'
+                if($header_td.hasClass('o_list_record_selector')){
+                    selector_index = i;
                 }
-                header_name_list.push({'header_name': text.trim(), 'header_data_id': data_id})
+                else{
+                    var text = $header_td.text().trim() || ""
+                    var data_id = $header_td.attr('data-id')
+                    if (text && !data_id){
+                        data_id = 'group_name'
+                    }
+                    header_name_list.push({'header_name': text.trim(), 'header_data_id': data_id})
+                }
+                i++;
             });
         });
         
@@ -60,21 +68,30 @@ ListView.include({
             var $data_ele = $(this)
             var is_analysis = false;
             if ($data_ele.text().trim()){
-            //Find group name
-                var group_th_eles = $data_ele.find('th')
+                //Find group name
+                var group_th_eles = $data_ele.find('.o_group_name')
                 $.each(group_th_eles,function(){
                     var $group_th_ele = $(this)
                     var text = $group_th_ele.text()
                     var is_analysis = true
-                    data.push({'data': text, 'bold': true})
+                    data.push({'data': text, 'bold': true, 'is_group': true})
                 });
                 var data_td_eles = $data_ele.find('td')
-                $.each(data_td_eles,function(){
+                var i = 0;
+                $.each(data_td_eles, function(){
+                    if(i === selector_index){
+                        i += 1;
+                        return;
+                    }
+                    i += 1;
+
                     var $data_td_ele = $(this)
                     var text = $data_td_ele.text().trim() || ""
-                    if ($data_td_ele && $data_td_ele[0].classList.contains('oe_number') && !$data_td_ele[0].classList.contains('oe_list_field_float_time')){
-                        text = text.replace('%', '')
-                        text = formats.parse_value(text, { type:"float" })
+                    if ($data_td_ele && $data_td_ele[0].classList.contains('o_list_number') && !$data_td_ele[0].classList.contains('oe_list_field_float_time')){
+                        text = text.split('').filter(function(char){
+                            return char === ',' || char === '.' || parseInt(char) || parseInt(char) === 0;
+                        }).join('');
+                        text = formats.parse_value(text, {type: "float"})
                         data.push({'data': text || "", 'number': true})
                     }
                     else{
@@ -91,10 +108,16 @@ ListView.include({
             var data = []
             var $footer_ele = $(this)
             var footer_td_eles = $footer_ele.find('td')
+            var i = 0;
             $.each(footer_td_eles,function(){
+                if(i === selector_index){
+                    i += 1;
+                    return;
+                }
+                i += 1;
                 var $footer_td_ele = $(this)
                 var text = $footer_td_ele.text().trim() || ""
-                if ($footer_td_ele && $footer_td_ele[0].classList.contains('oe_number')){
+                if ($footer_td_ele && $footer_td_ele[0].classList.contains('o_list_number')){
                     text = formats.parse_value(text, { type:"float" })
                     data.push({'data': text || "", 'bold': true, 'number': true})
                 }

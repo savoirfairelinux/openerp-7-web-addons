@@ -37,40 +37,36 @@ class ZbExcelExport(ExcelExport):
         font = xlwt.Font()
         font.bold = True
         style.font = font
-        ignore_index = []
-        count = 0
+
         for i, fieldname in enumerate(fields):
             if fieldname.get('header_data_id', False):
                 field_name = fieldname.get('header_name', '')
-                worksheet.write(0, i - count, field_name, style)
+                worksheet.write(0, i, field_name, style)
                 worksheet.col(i).width = 8000
-            else:
-                count += 1
-                ignore_index.append(i)
+
         style = xlwt.easyxf('align: wrap yes')
         bold_style = xlwt.easyxf('align: wrap yes')
         font = xlwt.Font()
         font.bold = True
         bold_style.font = font
+
         for row_index, row in enumerate(rows):
             count = 0
             for cell_index, cell_value in enumerate(row):
-                if cell_index not in ignore_index:
-                    cell_style = style
-                    if cell_value.get('bold', False):
-                        cell_style = bold_style
-                    cellvalue = cell_value.get('data', '')
-                    if isinstance(cellvalue, basestring):
-                        cellvalue = re.sub("\r", " ", cellvalue)
-                    if cell_value.get('number', False) and cellvalue:
-                        cellvalue = float(cellvalue)
-                    if cellvalue is False:
-                        cellvalue = None
-                    worksheet.write(
-                        row_index + 1, cell_index - count, cellvalue,
-                        cell_style)
-                else:
-                    count += 1
+                cell_style = style
+                if cell_value.get('bold', False):
+                    cell_style = bold_style
+                cellvalue = cell_value.get('data', '')
+                if isinstance(cellvalue, basestring):
+                    cellvalue = re.sub("\r", " ", cellvalue)
+                if cell_value.get('number', False) and cellvalue:
+                    cellvalue = float(cellvalue)
+                if cellvalue is False:
+                    cellvalue = None
+                worksheet.write(
+                    row_index + 1, cell_index - count, cellvalue,
+                    cell_style)
+
         fp = StringIO()
         workbook.save(fp)
         fp.seek(0)
